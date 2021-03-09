@@ -55,3 +55,41 @@ RSpec.describe 'Foo' do
 
   it { is_expected.to be_truthy }
 end
+
+class Something
+  attr_accessor :name
+
+  def initialize(name = 'swag')
+    @name = name
+  end
+
+  def to_s
+    @name
+  end
+
+  def to_ss
+    @name
+  end
+end
+
+# THIS FAILS because to_s
+RSpec.describe 'to_s' do
+  subject(:to_s) { something.to_s }
+
+  let(:something) { Something.new }
+
+  before { something.name = 'hello' }
+
+  it { is_expected.to eq 'hello' }
+end
+
+# THIS PASSES because to_s
+RSpec.describe 'to_ss' do
+  subject(:to_ss) { something.to_s }
+
+  let(:something) { Something.new }
+
+  before { something.name = 'hello' }
+
+  it { is_expected.to eq 'hello' }
+end
